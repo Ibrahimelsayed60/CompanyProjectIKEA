@@ -26,6 +26,9 @@ namespace LinkDev.IKEA.PL
                 }
                 );
 
+
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
             #region I replaced the following code by AddDbContext in the previous code
             //builder.Services.AddScoped<ApplicationDbContext>();
             //builder.Services.AddScoped<DbContextOptions<ApplicationDbContext>>((ServiceProvider) =>
