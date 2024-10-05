@@ -10,6 +10,8 @@ namespace LinkDev.IKEA.PL.Controllers
     // Composition: DepartmentController has a IDepartmentService
     public class DepartmentController : Controller
     {
+
+        #region Services
         //[FromServices]
         //public IDepartmentService DepartmentService { get; set; }
 
@@ -23,7 +25,9 @@ namespace LinkDev.IKEA.PL.Controllers
             _logger = logger;
             _environment = environment;
         }
+        #endregion
 
+        #region Index
         [HttpGet] // GET: /Department/Index
         public IActionResult Index()
         {
@@ -35,7 +39,9 @@ namespace LinkDev.IKEA.PL.Controllers
             //return View("Index", departments);
 
         }
+        #endregion
 
+        #region Create
         [HttpGet] // Get: /Department/Create
         public IActionResult Create()
         {
@@ -46,7 +52,7 @@ namespace LinkDev.IKEA.PL.Controllers
         [HttpPost]
         public IActionResult Create(CreatedDepartmentDto departmentDto)
         {
-            if(!ModelState.IsValid) // Server-side Validation
+            if (!ModelState.IsValid) // Server-side Validation
                 return View(departmentDto);
 
             var message = string.Empty;
@@ -81,13 +87,15 @@ namespace LinkDev.IKEA.PL.Controllers
                 //    message = "Department is not created";
                 //    return View("Error", message);
                 //}
-                
+
             }
             ModelState.AddModelError(string.Empty, message);
 
             return View(departmentDto);
-        }
+        } 
+        #endregion
 
+        #region Details
         [HttpGet] // Get : /Department/Details
         public IActionResult Details(int? id)
         {
@@ -96,21 +104,23 @@ namespace LinkDev.IKEA.PL.Controllers
 
             var department = _departmentService.GetDepartmentById(id.Value);
 
-            if(department is null)
+            if (department is null)
                 return NotFound();
 
             return View(department);
         }
+        #endregion
 
+        #region Update
         [HttpGet] // Get: /Department/Edit/id
         public IActionResult Edit(int? id)
         {
-            if(id is null)
+            if (id is null)
                 return BadRequest();
 
             var department = _departmentService.GetDepartmentById(id.Value);
 
-            if(department is null)
+            if (department is null)
                 return NotFound();
 
             return View(new DepartmentEditViewModel()
@@ -129,7 +139,7 @@ namespace LinkDev.IKEA.PL.Controllers
         //public IActionResult Edit(DepartmentEditViewModel departmentVM)
         public IActionResult Edit([FromRoute] int id, DepartmentEditViewModel departmentVM)
         {
-            if(!ModelState.IsValid) // Server-side Validation
+            if (!ModelState.IsValid) // Server-side Validation
                 return View(departmentVM);
 
             var message = string.Empty;
@@ -160,13 +170,59 @@ namespace LinkDev.IKEA.PL.Controllers
                 // 2. Set Message
                 message = _environment.IsDevelopment() ? ex.Message : "an error has occured during updating the department";
 
-                
+
             }
             ModelState.AddModelError(string.Empty, message);
 
             return View(departmentVM);
         }
+        #endregion
 
+        #region Delete
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id is null)
+                return BadRequest();
+
+            var department = _departmentService.GetDepartmentById(id.Value);
+
+            if (department is null)
+                return NotFound();
+
+            return View(department);
+        }
+
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var message = string.Empty;
+
+            try
+            {
+                var deleted = _departmentService.DeleteDepartment(id);
+
+                if (deleted)
+                    return RedirectToAction(nameof(Index));
+
+                message = "an error has occured during deleting the department";
+            }
+            catch (Exception ex)
+            {
+                // 1. log system
+                _logger.LogError(ex, ex.Message);
+
+                // 2. Set Message
+                message = _environment.IsDevelopment() ? ex.Message : "an error has occured during updating the department";
+            }
+
+            //ModelState.AddModelError(string.Empty, message);
+
+            return RedirectToAction(nameof(Index));
+
+        } 
+        #endregion
 
     }
 }

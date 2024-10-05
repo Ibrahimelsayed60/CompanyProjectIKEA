@@ -106,7 +106,7 @@ namespace LinkDev.IKEA.BLL.Services.Departments
         {
             var department = _departmentRepository.Get(id);
 
-            if(department is not { })
+            if(department is not null)
                 return _departmentRepository.Delete(department) > 0;
 
             return false;
