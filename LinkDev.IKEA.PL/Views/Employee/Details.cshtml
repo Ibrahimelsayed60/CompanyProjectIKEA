@@ -1,0 +1,126 @@
+﻿@model EmployeeDetailsDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Employee Details</h1>
+
+<br />
+<br />
+
+<ul class="nav nav-tabs" id="employeeTabs" role="tablist">
+
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+    </li>
+
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="administration-tab" data-bs-toggle="tab" href="#administration" role="tab" aria-controls="administration" aria-selected="false">Administration</a>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+
+    <!--General tab -->
+    <div class="tab-pane fade show active p-4 border" id="general" role="tabpanel" aria-labelledby="general">
+
+        <div class="row">
+            <div class="form-group mb-3">
+                <label class="form-label" asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" readonly/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label" asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" readonly />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label" asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" readonly />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label" asp-for="Age"></label>
+                <input asp-for="Age" class="form-control" readonly />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label" asp-for="Salary"></label>
+                <input asp-for="Salary" class="form-control" readonly />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label" asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" readonly />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="Gender" class="form-check-input" readonly />
+                <label class="form-check-label" asp-for="Gender"></label>
+                @* <span asp-validation-for="Gender" class="text-danger"></span> *@
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="EmployeeType" class="form-check-input" readonly />
+                <label class="form-check-label" asp-for="EmployeeType"></label>
+                @* <span asp-validation-for="EmployeeType" class="text-danger"></span> *@
+            </div>
+
+            <div class="form-check mb-3">
+                <label class="form-check-label" asp-for="IsActive"></label>
+                <input asp-for="IsActive" class="form-check-input" readonly />
+                @* <span asp-validation-for="IsActive" class="text-danger"></span> *@
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label" asp-for="HiringDate"></label>
+                <input asp-for="HiringDate" class="form-control" readonly />
+                <span asp-validation-for="HiringDate" class="text-danger"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!--Administration tab -->
+    <div class="tab-pane fade p-4 border" id="administration" role="tabpanel" aria-labelledby="administration">
+
+        <div class="form-group col-6">
+            <label class="col-form-label" asp-for="CreatedBy"></label>
+            <input asp-for="CreatedBy" class="form-control" readonly />
+        </div>
+
+        <div class="form-group col-6">
+            <label class="col-form-label" asp-for="CreatedOn"></label>
+            <input asp-for="CreatedOn" class="form-control" readonly />
+        </div>
+
+        <div class="form-group col-6">
+            <label class="col-form-label" asp-for="LastModifiedBy"></label>
+            <input asp-for="LastModifiedBy" class="form-control" readonly />
+        </div>
+
+        <div class="form-group col-6">
+            <label class="col-form-label" asp-for="LastModifiedOn"></label>
+            <input asp-for="LastModifiedOn" class="form-control" readonly />
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a> |
+        <a asp-action="Index" class="btn btn-secondary">Back To List</a>
+    </div>
+
+</div>
+

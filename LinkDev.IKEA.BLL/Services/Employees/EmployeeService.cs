@@ -28,8 +28,8 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                 Salary = employee.Salary,
                 IsActive = employee.IsActive,
                 Email = employee.Email,
-                Gender = nameof(employee.Gender),
-                EmployeeType = nameof(employee.EmployeeType),
+                Gender = employee.Gender.ToString(),
+                EmployeeType = employee.EmployeeType.ToString(),
             });
         }
 
