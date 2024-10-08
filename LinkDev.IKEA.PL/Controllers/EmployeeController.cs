@@ -2,6 +2,7 @@
 using LinkDev.IKEA.BLL.Services.Employees;
 using LinkDev.IKEA.DAL.Entities.Department;
 using LinkDev.IKEA.DAL.Entities.Employees;
+using LinkDev.IKEA.PL.ViewModels.Employees;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LinkDev.IKEA.PL.Controllers
@@ -90,7 +91,7 @@ namespace LinkDev.IKEA.PL.Controllers
         #endregion
 
 
-        #region Edit
+        #region Update
         [HttpGet] // Get: /Employee/Edit/id?
         public IActionResult Edit(int? id)
         {
@@ -102,7 +103,19 @@ namespace LinkDev.IKEA.PL.Controllers
             if (employee is null)
                 return NotFound();
 
-            return View(employee);
+            return View(new UpdatedEmployeeDto()
+            {
+                Name = employee.Name,
+                Address = employee.Address,
+                Email = employee.Email,
+                Age = employee.Age,
+                Salary = employee.Salary,
+                HiringDate = employee.HiringDate,
+                IsActive = employee.IsActive,
+                PhoneNumber = employee.PhoneNumber,
+                EmployeeType = employee.EmployeeType,
+                Gender = employee.Gender,
+            });
         }
 
         [HttpPost] // Post: /Employee/Edit/id?
@@ -115,6 +128,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
             try
             {
+
                 var result = _employeeService.UpdateEmployee(updatedEmployee);
 
                 if (result > 0)
