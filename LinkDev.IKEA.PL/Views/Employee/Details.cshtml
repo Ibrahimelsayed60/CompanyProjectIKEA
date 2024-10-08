@@ -26,64 +26,73 @@
     <div class="tab-pane fade show active p-4 border" id="general" role="tabpanel" aria-labelledby="general">
 
         <div class="row">
-            <div class="form-group mb-3">
+            <div class="form-group col-6 mb-3">
                 <label class="form-label" asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" readonly/>
-                <span asp-validation-for="Name" class="text-danger"></span>
+                @* <span asp-validation-for="Name" class="text-danger"></span> *@
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group col-6 mb-3">
                 <label class="form-label" asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" readonly />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                @* <span asp-validation-for="Email" class="text-danger"></span> *@
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group col-6 mb-3">
                 <label class="form-label" asp-for="Address"></label>
                 <input asp-for="Address" class="form-control" readonly />
-                <span asp-validation-for="Address" class="text-danger"></span>
+                @* <span asp-validation-for="Address" class="text-danger"></span> *@
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group col-6 mb-3">
                 <label class="form-label" asp-for="Age"></label>
                 <input asp-for="Age" class="form-control" readonly />
-                <span asp-validation-for="Age" class="text-danger"></span>
+                @* <span asp-validation-for="Age" class="text-danger"></span> *@
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group col-6 mb-3">
                 <label class="form-label" asp-for="Salary"></label>
                 <input asp-for="Salary" class="form-control" readonly />
-                <span asp-validation-for="Salary" class="text-danger"></span>
+                @* <span asp-validation-for="Salary" class="text-danger"></span> *@
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group col-6 mb-3">
                 <label class="form-label" asp-for="PhoneNumber"></label>
                 <input asp-for="PhoneNumber" class="form-control" readonly />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                @* <span asp-validation-for="PhoneNumber" class="text-danger"></span> *@
             </div>
 
-            <div class="form-check mb-3">
-                <input asp-for="Gender" class="form-check-input" readonly />
-                <label class="form-check-label" asp-for="Gender"></label>
-                @* <span asp-validation-for="Gender" class="text-danger"></span> *@
-            </div>
-
-            <div class="form-check mb-3">
-                <input asp-for="EmployeeType" class="form-check-input" readonly />
-                <label class="form-check-label" asp-for="EmployeeType"></label>
+            <div class="form-group col-6 my-3">
+                <label class="control-label" asp-for="EmployeeType"></label>
+                <select asp-for="EmployeeType" asp-items="Html.GetEnumSelectList<EmployeeType>()" class="form-control mb-3" disabled>
+                    <option value="">Select Employee Type</option>
+                </select>
                 @* <span asp-validation-for="EmployeeType" class="text-danger"></span> *@
             </div>
 
-            <div class="form-check mb-3">
-                <label class="form-check-label" asp-for="IsActive"></label>
-                <input asp-for="IsActive" class="form-check-input" readonly />
-                @* <span asp-validation-for="IsActive" class="text-danger"></span> *@
+            <div class="form-group col-6">
+                <label class="control-label mb-3" asp-for="Gender"></label><br />
+                @foreach (Gender genderOption in Enum.GetValues(typeof(Gender)))
+                {
+                    <label class="radio-inline">
+                        <input type="radio" asp-for="Gender" value="@genderOption" disabled />
+                        @genderOption
+                    </label>
+
+                    <br />
+                }
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group col-12 mb-3">
                 <label class="form-label" asp-for="HiringDate"></label>
                 <input asp-for="HiringDate" class="form-control" readonly />
-                <span asp-validation-for="HiringDate" class="text-danger"></span>
+                @* <span asp-validation-for="HiringDate" class="text-danger"></span> *@
+            </div>
+
+            <div class="form-check col-12 mb-3 ms-3">
+                <label class="form-check-label" asp-for="IsActive"></label>
+                <input asp-for="IsActive" class="form-check-input mb-3" disabled />
+                @* <span asp-validation-for="IsActive" class="text-danger"></span> *@
             </div>
 
         </div>

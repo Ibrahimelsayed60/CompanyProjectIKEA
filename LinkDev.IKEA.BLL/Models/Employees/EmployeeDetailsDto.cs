@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinkDev.IKEA.DAL.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -33,9 +34,9 @@ namespace LinkDev.IKEA.BLL.Models.Employees
         [Display(Name = "Hiring Date")]
         public DateTime HiringDate { get; set; }
 
-        public string Gender { get; set; } = null!;
+        public Gender Gender { get; set; }
 
-        public string EmployeeType { get; set; } = null!;
+        public EmployeeType EmployeeType { get; set; }
 
         public int CreatedBy { get; set; }
 
