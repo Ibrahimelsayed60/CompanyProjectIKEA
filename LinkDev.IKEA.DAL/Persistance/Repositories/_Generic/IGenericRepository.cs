@@ -12,7 +12,9 @@ namespace LinkDev.IKEA.DAL.Persistance.Repositories._Generic
     {
         IEnumerable<T> GetAll(bool withAsNoTracking = true);
 
-        IQueryable<T> GetAllAsIQueryable();
+        IQueryable<T> GetIQueryable();
+
+        IEnumerable<T> GetIEnumerable();
 
         T? Get(int id);
 

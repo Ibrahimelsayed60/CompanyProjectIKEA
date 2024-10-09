@@ -23,7 +23,7 @@ namespace LinkDev.IKEA.BLL.Services.Departments
         {
             //var departments = _departmentRepository.GetAll();
 
-            var departments = _departmentRepository.GetAllAsIQueryable().Select(department => new DepartmentDto()
+            var departments = _departmentRepository.GetIQueryable().Select(department => new DepartmentDto()
             {
                 Id = department.Id,
                 Name = department.Name,
