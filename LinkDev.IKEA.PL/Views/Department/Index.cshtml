@@ -4,18 +4,37 @@
 @{
     ViewData["Title"] = "Departments";
 
-    string? viewDataMessage = ViewData["Message"] as string;
+    // string? viewDataMessage = ViewData["Message"] as string;
 
-    string? viewBagMessage = ViewBag.
+    // string? viewBagMessage = ViewBag.
 }
 
-<div class="alert alert-info">
+@* <div class="alert alert-info">
     @ViewData["Message"]
 </div>
 
 <div class="alert alert-info">
     @ViewBag.Message
-</div>
+</div> *@
+
+@if (!string.IsNullOrEmpty(TempData["Message"] as string))
+{
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast show text-bg-Success" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">IKEA</strong>
+                <small>@DateTime.Now.Minute mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                @TempData["Message"]
+            </div>
+        </div>
+    </div>
+    
+}
+
 
 <h1>Departments</h1>
 
