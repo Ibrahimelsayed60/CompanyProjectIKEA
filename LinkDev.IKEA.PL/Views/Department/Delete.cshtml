@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
+    ViewData["Id"] = Model.Id;
 }
 
 <h1>Are You sure to Delete this Department?</h1>
@@ -9,7 +10,9 @@
 <br />
 <br />
 
-<ul class="nav nav-tabs" id="departmentTabs" role="tablist">
+<partial name="Partials/DetailsDeleteDepartmentPartial" />
+
+@* <ul class="nav nav-tabs" id="departmentTabs" role="tablist">
 
     <li class="nav-item" role="presentation">
         <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
@@ -79,4 +82,4 @@
         <a asp-action="Index" class="btn btn-secondary">Cancel</a>
     </form>
 
-</div>
+</div> *@

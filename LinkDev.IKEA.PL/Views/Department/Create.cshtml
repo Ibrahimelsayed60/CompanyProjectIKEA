@@ -1,14 +1,17 @@
-﻿@model CreatedDepartmentDto
+﻿@model DepartmentViewModel
 
 @{
     ViewData["Title"] = "Create";
+    ViewBag.Action = "Create";
 }
 
 <div class=" row justify-content-center align-items-center">
 
 <h1 class="col-8 my-4">Create New Department</h1>
 
-<form action="/Department/Create" method="post" class="col-8">
+    <partial name="Partials/CreateEditDepartmentPartial" />
+
+@* <form action="/Department/Create" method="post" class="col-8">
 
     <div asp-validation-summary="ModelOnly"></div> 
 
@@ -39,6 +42,17 @@
         <a asp-action="Index" class="btn btn-light">Back To List</a>
     </div>
 
-</form>
+</form> *@
 </div>
 
+
+@section ValidationScripts
+{
+    <partial name="_ValidationScriptsPartial">
+
+@* <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script> *@
+@* <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script> *@
+
+@* <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> *@
+@* <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> *@
+}

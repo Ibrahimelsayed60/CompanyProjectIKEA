@@ -2,7 +2,7 @@
 
 namespace LinkDev.IKEA.PL.ViewModels.Departments
 {
-    public class DepartmentEditViewModel
+    public class DepartmentViewModel
     {
         //public int Id { get; set; }
 

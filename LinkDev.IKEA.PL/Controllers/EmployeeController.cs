@@ -40,16 +40,31 @@ namespace LinkDev.IKEA.PL.Controllers
         }
 
         [HttpPost] // Post: /Employee/Create
-        public IActionResult Create(CreatedEmployeeDto employeeDto)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(EmployeeEditViewModel employeeVM)
         {
 
             if (!ModelState.IsValid)
-                return View(employeeDto);
+                return View(employeeVM);
 
             var message = string.Empty;
 
             try
             {
+                var employeeDto = new CreatedEmployeeDto()
+                {
+                    Name = employeeVM.Name,
+                    Email = employeeVM.Email,
+                    Address = employeeVM.Address,
+                    PhoneNumber = employeeVM.PhoneNumber,
+                    IsActive = employeeVM.IsActive,
+                    Age = employeeVM.Age,
+                    EmployeeType = employeeVM.EmployeeType,
+                    Gender = employeeVM.Gender,
+                    HiringDate = employeeVM.HiringDate,
+                    Salary = employeeVM.Salary,
+                };
+
                 var result = _employeeService.CreateEmployee(employeeDto);
 
                 if (result > 0)
@@ -69,7 +84,7 @@ namespace LinkDev.IKEA.PL.Controllers
                 message = _webHostEnvironment.IsDevelopment() ? ex.Message : "An Error occured during creating Employee";
             }
             ModelState.AddModelError(string.Empty, message);
-            return View(employeeDto);
+            return View(employeeVM);
         } 
         #endregion
 
@@ -103,7 +118,7 @@ namespace LinkDev.IKEA.PL.Controllers
             if (employee is null)
                 return NotFound();
 
-            return View(new UpdatedEmployeeDto()
+            return View(new EmployeeEditViewModel()
             {
                 Name = employee.Name,
                 Address = employee.Address,
@@ -119,7 +134,8 @@ namespace LinkDev.IKEA.PL.Controllers
         }
 
         [HttpPost] // Post: /Employee/Edit/id?
-        public IActionResult Edit([FromRoute] int id, UpdatedEmployeeDto updatedEmployee)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit([FromRoute] int id, EmployeeEditViewModel updatedEmployee)
         {
             if (!ModelState.IsValid)
                 return View(updatedEmployee);
@@ -128,8 +144,21 @@ namespace LinkDev.IKEA.PL.Controllers
 
             try
             {
-
-                var result = _employeeService.UpdateEmployee(updatedEmployee);
+                var employeeDto = new UpdatedEmployeeDto()
+                {
+                    Id = id,
+                    Name = updatedEmployee.Name,
+                    Email = updatedEmployee.Email,
+                    Address = updatedEmployee.Address,
+                    PhoneNumber = updatedEmployee.PhoneNumber,
+                    IsActive = updatedEmployee.IsActive,
+                    Age = updatedEmployee.Age,
+                    EmployeeType = updatedEmployee.EmployeeType,
+                    Gender = updatedEmployee.Gender,
+                    HiringDate = updatedEmployee.HiringDate,
+                    Salary = updatedEmployee.Salary,
+                };
+                var result = _employeeService.UpdateEmployee(employeeDto);
 
                 if (result > 0)
                     return RedirectToAction(nameof(Index));
@@ -167,6 +196,7 @@ namespace LinkDev.IKEA.PL.Controllers
         //}
 
         [HttpPost] // Post: /Employee/Delete
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             var message = string.Empty;

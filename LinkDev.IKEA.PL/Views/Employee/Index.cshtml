@@ -42,7 +42,12 @@
                     <td>@Html.DisplayFor(X => employee.Salary)</td>
                     <td>@Html.DisplayFor(X => employee.IsActive)</td>
                     <td>@Html.DisplayFor(X => employee.Gender)</td>
-                    <td>
+
+                    <partial name="_ButtonsPartial" model="@employee.Id.ToString()" />
+                    @* @{
+                        Html.RenderPartial("_ButtonsPartial", employee.Id);
+                    } *@
+                    @* <td>
                         <a asp-controller="Employee" asp-action="Details" asp-route-id="@employee.Id" class="btn btn-warning">
                             <i class="fas fa-eye"></i>Details
                         </a>
@@ -52,7 +57,7 @@
                         <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-success">
                             <i class="fas fa-edit"></i>Update
                         </a>
-                    </td>
+                    </td>*@
 
                     <td>
                         @* <a asp-controller="Department" asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">
@@ -63,7 +68,7 @@
                             <i class="fas fa-trash"></i>Delete
                         </button>
 
-                    </td>
+                    </td> 
                 </tr>
 
                 <!-- Modal -->
@@ -78,7 +83,7 @@
                                 Are you sure to delete this Employee?
                             </div>
                             <div class="modal-footer">
-                                <form asp-action="Delete" asp-route-id="@employee.Id" method="post">
+                                <form asp-action="Delete" asp-route-id="@employee.Id.ToString()" method="post">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
