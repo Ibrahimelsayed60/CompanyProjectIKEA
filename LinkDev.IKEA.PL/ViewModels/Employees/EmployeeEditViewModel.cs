@@ -5,6 +5,7 @@ namespace LinkDev.IKEA.PL.ViewModels.Employees
 {
     public class EmployeeEditViewModel
     {
+
         [Required]
         [MaxLength(50, ErrorMessage = "Max Length of Name is 50 chars")]
         [MinLength(5, ErrorMessage = "Min Length of Name is 5 chars")]
