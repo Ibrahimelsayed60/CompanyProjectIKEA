@@ -63,8 +63,9 @@
                         @* <a asp-controller="Department" asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">
                 <i class="fas fa-trash"></i>Delete
                 </a> *@
+                @string.Concat()
 
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@string.Concat("deleteModal",@employee.Id.ToString())">
                             <i class="fas fa-trash"></i>Delete
                         </button>
 
@@ -72,7 +73,7 @@
                 </tr>
 
                 <!-- Modal -->
-                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="@string.Concat("deleteModal",@employee.Id.ToString())" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
