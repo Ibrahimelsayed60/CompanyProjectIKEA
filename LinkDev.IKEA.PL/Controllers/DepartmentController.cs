@@ -31,6 +31,15 @@ namespace LinkDev.IKEA.PL.Controllers
         [HttpGet] // GET: /Department/Index
         public IActionResult Index()
         {
+
+            #region ViewBag and ViewData testing
+            //ViewData["Message"] = "Hello ViewData";
+
+            //ViewBag.Message = "Hello ViewBag";
+
+            //ViewBag.Message = new { Id = 10, Name="Hassan" }; 
+            #endregion
+
             var departments = _departmentService.GetAllDepartments();
 
             //return View();
@@ -45,6 +54,7 @@ namespace LinkDev.IKEA.PL.Controllers
         [HttpGet] // Get: /Department/Create
         public IActionResult Create()
         {
+            
 
             return View();
         }

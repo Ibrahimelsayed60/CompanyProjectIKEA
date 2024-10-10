@@ -3,7 +3,19 @@
 
 @{
     ViewData["Title"] = "Departments";
+
+    string? viewDataMessage = ViewData["Message"] as string;
+
+    string? viewBagMessage = ViewBag.
 }
+
+<div class="alert alert-info">
+    @ViewData["Message"]
+</div>
+
+<div class="alert alert-info">
+    @ViewBag.Message
+</div>
 
 <h1>Departments</h1>
 
