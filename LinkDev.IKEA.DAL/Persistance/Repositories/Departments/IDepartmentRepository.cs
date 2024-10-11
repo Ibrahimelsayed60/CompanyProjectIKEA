@@ -1,4 +1,4 @@
-﻿using LinkDev.IKEA.DAL.Entities.Department;
+﻿using LinkDev.IKEA.DAL.Entities.Departments;
 using LinkDev.IKEA.DAL.Persistance.Repositories._Generic;
 using System;
 using System.Collections.Generic;

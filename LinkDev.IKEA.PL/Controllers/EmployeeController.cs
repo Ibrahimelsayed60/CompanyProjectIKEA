@@ -1,6 +1,7 @@
 ﻿using LinkDev.IKEA.BLL.Models.Employees;
+using LinkDev.IKEA.BLL.Services.Departments;
 using LinkDev.IKEA.BLL.Services.Employees;
-using LinkDev.IKEA.DAL.Entities.Department;
+using LinkDev.IKEA.DAL.Entities.Departments;
 using LinkDev.IKEA.DAL.Entities.Employees;
 using LinkDev.IKEA.PL.ViewModels.Employees;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +12,18 @@ namespace LinkDev.IKEA.PL.Controllers
     {
         #region Services
         private readonly IEmployeeService _employeeService;
+        private readonly IDepartmentService? _departmentService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<EmployeeController> _logger;
 
-        public EmployeeController(IEmployeeService employeeService, IWebHostEnvironment webHostEnvironment, ILogger<EmployeeController> logger)
+        public EmployeeController(
+            IEmployeeService employeeService,
+            //IDepartmentService departmentService,
+            IWebHostEnvironment webHostEnvironment, 
+            ILogger<EmployeeController> logger)
         {
             _employeeService = employeeService;
+            //_departmentService = departmentService;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
         }
@@ -34,8 +41,11 @@ namespace LinkDev.IKEA.PL.Controllers
 
         #region Create
         [HttpGet] // Get: /Employee/Get
-        public IActionResult Create()
+        public IActionResult Create(/*[FromServices] IDepartmentService departmentService*/)
         {
+
+            //ViewData["Departments"] = departmentService.GetAllDepartments();
+
             return View();
         }
 
@@ -63,6 +73,7 @@ namespace LinkDev.IKEA.PL.Controllers
                     Gender = employeeVM.Gender,
                     HiringDate = employeeVM.HiringDate,
                     Salary = employeeVM.Salary,
+                    DepartmentId = employeeVM.DepartmentId,
                 };
 
                 var result = _employeeService.CreateEmployee(employeeDto);
@@ -108,7 +119,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
         #region Update
         [HttpGet] // Get: /Employee/Edit/id?
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id/*, [FromServices] IDepartmentService departmentService*/)
         {
             if (id is null)
                 return BadRequest();
@@ -117,6 +128,8 @@ namespace LinkDev.IKEA.PL.Controllers
 
             if (employee is null)
                 return NotFound();
+
+            //ViewData["Departments"] = departmentService.GetAllDepartments();
 
             return View(new EmployeeEditViewModel()
             {
@@ -130,6 +143,7 @@ namespace LinkDev.IKEA.PL.Controllers
                 PhoneNumber = employee.PhoneNumber,
                 EmployeeType = employee.EmployeeType,
                 Gender = employee.Gender,
+                DepartmentId = employee.DepartmentId
             });
         }
 
@@ -157,6 +171,7 @@ namespace LinkDev.IKEA.PL.Controllers
                     Gender = updatedEmployee.Gender,
                     HiringDate = updatedEmployee.HiringDate,
                     Salary = updatedEmployee.Salary,
+                    DepartmentId = updatedEmployee.DepartmentId,
                 };
                 var result = _employeeService.UpdateEmployee(employeeDto);
 
