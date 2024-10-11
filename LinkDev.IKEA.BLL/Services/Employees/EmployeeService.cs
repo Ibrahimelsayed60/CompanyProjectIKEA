@@ -1,6 +1,7 @@
 ﻿using LinkDev.IKEA.BLL.Models.Employees;
 using LinkDev.IKEA.DAL.Entities.Employees;
 using LinkDev.IKEA.DAL.Persistance.Repositories.Employees;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
             var employees = _employeeRepository.
                             GetIQueryable().
                             Where(E => !E.IsDeleted).
+                            Include(E => E.Department).
                             Select(employee => new EmployeeDto()
             {
                 Id = employee.Id,
@@ -33,6 +35,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                 Email = employee.Email,
                 Gender = employee.Gender.ToString(),
                 EmployeeType = employee.EmployeeType.ToString(),
+                Department = employee.Department.Name
             }).ToList();
 
             return employees;
@@ -56,7 +59,8 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                     PhoneNumber = employee.PhoneNumber,
                     HiringDate = employee.HiringDate,
                     Gender = employee.Gender,
-                    EmployeeType =employee.EmployeeType
+                    EmployeeType =employee.EmployeeType,
+                    Department = employee.Department.Name,
                 };
 
             return null;

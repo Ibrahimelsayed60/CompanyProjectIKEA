@@ -74,6 +74,7 @@ namespace LinkDev.IKEA.PL.Controllers
                     HiringDate = employeeVM.HiringDate,
                     Salary = employeeVM.Salary,
                     DepartmentId = employeeVM.DepartmentId,
+                    
                 };
 
                 var result = _employeeService.CreateEmployee(employeeDto);
@@ -143,7 +144,8 @@ namespace LinkDev.IKEA.PL.Controllers
                 PhoneNumber = employee.PhoneNumber,
                 EmployeeType = employee.EmployeeType,
                 Gender = employee.Gender,
-                DepartmentId = employee.DepartmentId
+                //DepartmentId = employee.DepartmentId,
+                DepartmentName = employee.Department
             });
         }
 

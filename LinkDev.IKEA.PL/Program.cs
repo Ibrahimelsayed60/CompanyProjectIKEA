@@ -24,7 +24,7 @@ namespace LinkDev.IKEA.PL
                 optionsAction: (optionsBuilder) => 
                 {
                     //optionsBuilder.UseSqlServer("Server = .; Database = IKEA_G03; Trusted_Connection = True; TrustServerCertificate = True;");
-                    optionsBuilder.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
+                    optionsBuilder.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
                     //optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 }
                 );

@@ -40,5 +40,7 @@ namespace LinkDev.IKEA.PL.ViewModels.Employees
 
         [Display(Name="Department")]
         public int? DepartmentId { get; set; }
+
+        public string? DepartmentName { get; set; }
     }
 }
