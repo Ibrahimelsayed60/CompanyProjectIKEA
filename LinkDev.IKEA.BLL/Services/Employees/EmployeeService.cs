@@ -19,13 +19,13 @@ namespace LinkDev.IKEA.BLL.Services.Employees
             _employeeRepository = employeeRepository;
         }
 
-        public IEnumerable<EmployeeDto> GetAllEmployees()
+        public IEnumerable<EmployeeDto> GetEmployees(string search)
         {
-            var employees = _employeeRepository.
-                            GetIQueryable().
-                            Where(E => !E.IsDeleted).
-                            Include(E => E.Department).
-                            Select(employee => new EmployeeDto()
+            var employees = _employeeRepository
+                            .GetIQueryable()
+                            .Where(E => !E.IsDeleted && (string.IsNullOrEmpty(search) || E.Name.ToLower().Contains(search.ToLower())))
+                            .Include(E => E.Department)
+                            .Select(employee => new EmployeeDto()
             {
                 Id = employee.Id,
                 Name = employee.Name,
@@ -60,7 +60,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                     HiringDate = employee.HiringDate,
                     Gender = employee.Gender,
                     EmployeeType =employee.EmployeeType,
-                    Department = employee.Department.Name,
+                    Department = employee.Department?.Name,
                 };
 
             return null;
