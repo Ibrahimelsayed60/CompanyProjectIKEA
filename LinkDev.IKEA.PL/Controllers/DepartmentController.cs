@@ -190,6 +190,7 @@ namespace LinkDev.IKEA.PL.Controllers
             {
 
                 var departmentToUpdate = _mapper.Map<DepartmentViewModel, UpdatedDepartmentDto>(departmentVM);
+                departmentToUpdate.Id = id;
                 //var departmentToUpdate = new UpdatedDepartmentDto()
                 //{
                 //    Id = id,

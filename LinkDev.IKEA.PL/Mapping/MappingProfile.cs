@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using LinkDev.IKEA.BLL.Models.Departments;
+using LinkDev.IKEA.BLL.Models.Employees;
 using LinkDev.IKEA.PL.ViewModels.Departments;
+using LinkDev.IKEA.PL.ViewModels.Employees;
 
 namespace LinkDev.IKEA.PL.Mapping
 {
@@ -10,6 +12,12 @@ namespace LinkDev.IKEA.PL.Mapping
         public MappingProfile()
         {
             #region Employee
+
+            CreateMap<EmployeeEditViewModel, CreatedEmployeeDto>();
+
+            CreateMap<EmployeeDetailsDto, EmployeeEditViewModel>();
+
+            CreateMap<EmployeeEditViewModel, UpdatedEmployeeDto>();
 
             #endregion
 
