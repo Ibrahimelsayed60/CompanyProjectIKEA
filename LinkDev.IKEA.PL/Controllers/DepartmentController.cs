@@ -1,4 +1,5 @@
-﻿using LinkDev.IKEA.BLL.Models.Departments;
+﻿using AutoMapper;
+using LinkDev.IKEA.BLL.Models.Departments;
 using LinkDev.IKEA.BLL.Services.Departments;
 using LinkDev.IKEA.PL.ViewModels.Departments;
 using Microsoft.AspNetCore.Mvc;
@@ -15,12 +16,18 @@ namespace LinkDev.IKEA.PL.Controllers
         //public IDepartmentService DepartmentService { get; set; }
 
         private readonly IDepartmentService _departmentService;
+        private readonly IMapper _mapper;
         private readonly ILogger<DepartmentController> _logger;
         private readonly IWebHostEnvironment _environment;
 
-        public DepartmentController(IDepartmentService departmentService, ILogger<DepartmentController> logger, IWebHostEnvironment environment)
+        public DepartmentController(
+                IDepartmentService departmentService,
+                IMapper mapper,
+                ILogger<DepartmentController> logger, 
+                IWebHostEnvironment environment)
         {
             _departmentService = departmentService;
+            _mapper = mapper;
             _logger = logger;
             _environment = environment;
         }
@@ -69,13 +76,15 @@ namespace LinkDev.IKEA.PL.Controllers
 
             try
             {
-                var departmentToCreate = new CreatedDepartmentDto()
-                {
-                    Code = departmentVM.Code,
-                    Name = departmentVM.Name,
-                    Description = departmentVM.Description,
-                    CreationDate = departmentVM.CreationDate,
-                };
+                var departmentToCreate = _mapper.Map<DepartmentViewModel, CreatedDepartmentDto>(departmentVM);
+
+                //var departmentToCreate = new CreatedDepartmentDto()
+                //{
+                //    Code = departmentVM.Code,
+                //    Name = departmentVM.Name,
+                //    Description = departmentVM.Description,
+                //    CreationDate = departmentVM.CreationDate,
+                //};
 
                 var created = _departmentService.CreateDepartment(departmentToCreate) > 0;
 
@@ -88,9 +97,9 @@ namespace LinkDev.IKEA.PL.Controllers
                 {
                     TempData["Message"] = "Department is not created";
 
-                    //message = "Department is not created";
-                    //ModelState.AddModelError(string.Empty, message);
-                    //return View(departmentVM);
+                    message = "Department is not created";
+                    ModelState.AddModelError(string.Empty, message);
+                    return View(departmentVM);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -117,9 +126,9 @@ namespace LinkDev.IKEA.PL.Controllers
                 //}
 
             }
-            ModelState.AddModelError(string.Empty, message);
+            //ModelState.AddModelError(string.Empty, message);
 
-            return View(departmentVM);
+            //return View(departmentVM);
         } 
         #endregion
 
@@ -151,14 +160,18 @@ namespace LinkDev.IKEA.PL.Controllers
             if (department is null)
                 return NotFound();
 
-            return View(new DepartmentViewModel()
-            {
-                //Id = id.Value,
-                Code = department.Code,
-                Name = department.Name,
-                Description = department.Description,
-                CreationDate = department.CreationDate,
-            });
+            var departmentVM = _mapper.Map<DepartmentDetailsDto, DepartmentViewModel>(department);
+
+            return View(departmentVM);
+
+            //return View(new DepartmentViewModel()
+            //{
+            //    //Id = id.Value,
+            //    Code = department.Code,
+            //    Name = department.Name,
+            //    Description = department.Description,
+            //    CreationDate = department.CreationDate,
+            //});
 
 
         }
@@ -175,14 +188,16 @@ namespace LinkDev.IKEA.PL.Controllers
 
             try
             {
-                var departmentToUpdate = new UpdatedDepartmentDto()
-                {
-                    Id = id,
-                    Code = departmentVM.Code,
-                    Name = departmentVM.Name,
-                    Description = departmentVM.Description,
-                    CreationDate = departmentVM.CreationDate,
-                };
+
+                var departmentToUpdate = _mapper.Map<DepartmentViewModel, UpdatedDepartmentDto>(departmentVM);
+                //var departmentToUpdate = new UpdatedDepartmentDto()
+                //{
+                //    Id = id,
+                //    Code = departmentVM.Code,
+                //    Name = departmentVM.Name,
+                //    Description = departmentVM.Description,
+                //    CreationDate = departmentVM.CreationDate,
+                //};
 
                 var updated = _departmentService.updateDepartment(departmentToUpdate) > 0;
 

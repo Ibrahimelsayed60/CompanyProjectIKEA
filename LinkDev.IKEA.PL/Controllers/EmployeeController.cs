@@ -1,4 +1,5 @@
-﻿using LinkDev.IKEA.BLL.Models.Employees;
+﻿using LinkDev.IKEA.BLL.Models.Departments;
+using LinkDev.IKEA.BLL.Models.Employees;
 using LinkDev.IKEA.BLL.Services.Departments;
 using LinkDev.IKEA.BLL.Services.Employees;
 using LinkDev.IKEA.DAL.Entities.Departments;
@@ -143,6 +144,8 @@ namespace LinkDev.IKEA.PL.Controllers
                 return NotFound();
 
             //ViewData["Departments"] = departmentService.GetAllDepartments();
+
+            
 
             return View(new EmployeeEditViewModel()
             {
