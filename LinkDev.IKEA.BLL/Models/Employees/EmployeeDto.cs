@@ -31,7 +31,9 @@ namespace LinkDev.IKEA.BLL.Models.Employees
 
         public string EmployeeType { get; set; } = null!;
 
-        public string? Department { get; set; } 
+        public string? Department { get; set; }
+
+        public string? Image { get; set; }
 
         #region Administartion
         public int CreatedBy { get; set; }

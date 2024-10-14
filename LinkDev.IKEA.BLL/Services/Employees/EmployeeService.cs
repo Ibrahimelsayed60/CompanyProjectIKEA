@@ -1,4 +1,5 @@
-﻿using LinkDev.IKEA.BLL.Models.Employees;
+﻿using LinkDev.IKEA.BLL.Common.Services.Attachments;
+using LinkDev.IKEA.BLL.Models.Employees;
 using LinkDev.IKEA.DAL.Entities.Employees;
 using LinkDev.IKEA.DAL.Persistance.Repositories.Employees;
 using LinkDev.IKEA.DAL.Persistance.UnitOfWork;
@@ -14,12 +15,14 @@ namespace LinkDev.IKEA.BLL.Services.Employees
     public class EmployeeService : IEmployeeService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAttachmentService _attachmentService;
 
         //private readonly IEmployeeRepository _employeeRepository;
 
-        public EmployeeService(/*IEmployeeRepository employeeRepository*/ IUnitOfWork unitOfWork) // Ask CLR For Creating Object from class implementing "IUnitOfWork"
+        public EmployeeService(/*IEmployeeRepository employeeRepository*/ IUnitOfWork unitOfWork, IAttachmentService attachmentService) // Ask CLR For Creating Object from class implementing "IUnitOfWork"
         {
             _unitOfWork = unitOfWork;
+            _attachmentService = attachmentService;
             //_employeeRepository = employeeRepository;
         }
 
@@ -72,6 +75,8 @@ namespace LinkDev.IKEA.BLL.Services.Employees
 
         public int CreateEmployee(CreatedEmployeeDto employeeDto)
         {
+            
+
             var employee = new Employee()
             {
                 Name = employeeDto.Name,
@@ -89,6 +94,9 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                 LastModifiedBy = 1,
                 LastModifiedOn = DateTime.UtcNow
             };
+
+            if(employeeDto.Image is not null)
+                employee.Image = _attachmentService.Upload(employeeDto.Image, "images");
 
             _unitOfWork.EmployeeRepository.Add(employee);
 
@@ -111,6 +119,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                 Gender = employeeDto.Gender,
                 EmployeeType = employeeDto.EmployeeType,
                 DepartmentId = employeeDto.DepartmentId,
+                Image = employeeDto.Image,
                 CreatedBy = 1,
                 LastModifiedBy = 1,
                 LastModifiedOn = DateTime.UtcNow

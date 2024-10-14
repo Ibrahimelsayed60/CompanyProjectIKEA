@@ -49,5 +49,7 @@ namespace LinkDev.IKEA.DAL.Entities.Employees
         // Navigational Property [One]
         public virtual Department? Department { get; set; }
 
+        public string? Image {  get; set; }
+
     }
 }

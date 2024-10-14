@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.IKEA.BLL.Common.Services.Attachments
 {
-    internal class AttachmentService : IAttachmentService
+    public class AttachmentService : IAttachmentService
     {
         private List<string> allowedExtensions = new List<string>() { ".png", ".jpg", ".jpeg" };
 
