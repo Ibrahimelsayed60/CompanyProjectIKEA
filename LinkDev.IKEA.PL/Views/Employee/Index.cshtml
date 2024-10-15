@@ -33,6 +33,7 @@
         <thead class="text-center">
             <tr>
                 <td>@Html.DisplayNameFor(D => D.Name)</td>
+                <td>@Html.DisplayNameFor(D => D.Image)</td>
                 <td>@Html.DisplayNameFor(D => D.Email)</td>
                 <td>@Html.DisplayNameFor(D => D.Department)</td>
                 <td>@Html.DisplayNameFor(D => D.EmployeeType)</td>
@@ -52,6 +53,13 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(X => employee.Name)</td>
+                    @if(employee.Image is null)
+                    {
+                        <td></td>
+                    }else
+                    {
+                    <td><img src="~/files/images/@employee.Image" class="rounded" height="40" width="40" alt="EmployeeImage" /></td>
+                    }
                     <td>@Html.DisplayFor(X => employee.Email)</td>
                     <td>@Html.DisplayFor(X => employee.Department)</td>
                     <td>@Html.DisplayFor(X => employee.EmployeeType)</td>
