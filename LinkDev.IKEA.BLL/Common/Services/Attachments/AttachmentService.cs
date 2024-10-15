@@ -13,7 +13,7 @@ namespace LinkDev.IKEA.BLL.Common.Services.Attachments
 
         private const int _allowedMaxSize = 2_097_152;
 
-        public string? Upload(IFormFile file, string folderName)
+        public async Task<string?> UploadAsync(IFormFile file, string folderName)
         {
             var extension = Path.GetExtension(file.FileName);
 
@@ -37,7 +37,7 @@ namespace LinkDev.IKEA.BLL.Common.Services.Attachments
 
             //fileStream = File.Create(filePath);
             
-            file.CopyTo(fileStream);
+            await file.CopyToAsync(fileStream);
 
             return fileName;
 

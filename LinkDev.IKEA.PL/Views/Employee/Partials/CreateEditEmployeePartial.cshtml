@@ -4,7 +4,7 @@
 @inject IDepartmentService departmentService
 
 @{
-    var departments = new SelectList(departmentService.GetAllDepartments() as IEnumerable<DepartmentDto>, nameof(DepartmentDto.Id), nameof(DepartmentDto.Name));
+    var departments = new SelectList( await departmentService.GetAllDepartmentsAsync() as IEnumerable<DepartmentDto>, nameof(DepartmentDto.Id), nameof(DepartmentDto.Name));
 }
 
 <form asp-action="@ViewData["Title"]" method="post" class="row col-6" enctype="multipart/form-data">

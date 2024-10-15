@@ -48,5 +48,6 @@ namespace LinkDev.IKEA.BLL.Models.Employees
 
         public string? Image { get; set; }
 
+
     }
 }
