@@ -4,10 +4,10 @@
 @inject IDepartmentService departmentService
 
 @{
-    var departments = new SelectList(departmentService.GetAllDepartments() as IEnumerable<DepartmentDto>, nameof(DepartmentDto.Id), nameof(DepartmentDto.Name));
+    var departments = new SelectList( await departmentService.GetAllDepartmentsAsync() as IEnumerable<DepartmentDto>, nameof(DepartmentDto.Id), nameof(DepartmentDto.Name));
 }
 
-<form asp-action="@ViewData["Title"]" method="post" class="row col-6">
+<form asp-action="@ViewData["Title"]" method="post" class="row col-6" enctype="multipart/form-data">
 
     <div asp-validation-summary="ModelOnly"></div>
 
@@ -90,7 +90,11 @@
         @* <span asp-validation-for="IsActive" class="text-danger"></span> *@
     </div>
 
-
+    <div class="form-group col-6 mb-3">
+        <label class="form-label" asp-for="Image"></label>
+        <input asp-for="Image" class="form-control mb-3" />
+        @* <span asp-validation-for="Image" class="text-danger"></span> *@
+    </div>
 
     @if ((ViewData["Title"] as string) == "Create")
     {
