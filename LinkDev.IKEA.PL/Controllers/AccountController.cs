@@ -159,5 +159,33 @@ namespace LinkDev.IKEA.PL.Controllers
         }
 
 		// Reset Password
-	}
+        public IActionResult ResetPassword(string email, string token)
+        {
+            TempData["email"] = email;
+            TempData["token"] = token;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPasswordAsync(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string email = TempData["email"] as string;
+                string token = TempData["token"] as string;
+                var User = await _userManager.FindByEmailAsync(email);
+                var Result = await _userManager.ResetPasswordAsync(User, token, model.NewPassword);
+                if (Result.Succeeded)
+                    return RedirectToAction(nameof(Login));
+                else
+                    foreach (var error in Result.Errors)
+                        ModelState.AddModelError(string.Empty, error.Description);
+
+            }
+            return View(model);
+
+        }
+
+
+    }
 }
