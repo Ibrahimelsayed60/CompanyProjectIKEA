@@ -7,6 +7,7 @@ using LinkDev.IKEA.DAL.Persistance.Repositories.Departments;
 using LinkDev.IKEA.DAL.Persistance.Repositories.Employees;
 using LinkDev.IKEA.DAL.Persistance.UnitOfWork;
 using LinkDev.IKEA.PL.Mapping;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -63,9 +64,15 @@ namespace LinkDev.IKEA.PL
                 //P@ssw0rd
 
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            builder.Services.AddAuthentication();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "Account/Login";
+                    options.AccessDeniedPath = "Home/Error";
+                });
 
             #region I replaced the following code by AddDbContext in the previous code
             //builder.Services.AddScoped<ApplicationDbContext>();
@@ -103,12 +110,12 @@ namespace LinkDev.IKEA.PL
 
             app.UseRouting();
 
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=Register}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             #endregion
             app.Run();
