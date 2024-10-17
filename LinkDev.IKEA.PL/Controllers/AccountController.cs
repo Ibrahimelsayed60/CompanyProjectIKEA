@@ -1,5 +1,6 @@
 ﻿using LinkDev.IKEA.DAL.Entities;
 using LinkDev.IKEA.DAL.Entities.Emails;
+using LinkDev.IKEA.PL.Helpers;
 using LinkDev.IKEA.PL.ViewModels.Accounts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -128,13 +129,18 @@ namespace LinkDev.IKEA.PL.Controllers
                 if(User is not null)
                 {
                     // Send Email
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(User);
+                    // Account/ResetPassword?email=hemasayed600@gmail.com
+                    var ResetPasswordLink = Url.Action("ResetPassword", "Account", new { email = User.Email, Token = token }, Request.Scheme);
+
                     var email = new Email()
                     {
                         Subject = "Reset Password",
                         To = model.Email,
-                        Body = "ResetPasswordLink"
+                        Body = ResetPasswordLink
                     };
-
+                    EmailSettings.SendEmail(email);
+                    return RedirectToAction(nameof(CheckYourInbox));
                 }
                 else
                 {
@@ -142,12 +148,16 @@ namespace LinkDev.IKEA.PL.Controllers
                 }
 
             }
-            else
-            {
-                return View("ForgetPassword",model);
-            }
+            
+            return View("ForgetPassword",model);
+            
         }
 
-        // Reset Password
-    }
+        public IActionResult CheckYourInbox()
+        {
+            return View();
+        }
+
+		// Reset Password
+	}
 }
