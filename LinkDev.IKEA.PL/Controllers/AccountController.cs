@@ -1,4 +1,5 @@
 ﻿using LinkDev.IKEA.DAL.Entities;
+using LinkDev.IKEA.DAL.Entities.Emails;
 using LinkDev.IKEA.PL.ViewModels.Accounts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -98,20 +99,55 @@ namespace LinkDev.IKEA.PL.Controllers
                 }
             }
             return View(model);
-        } 
+        }
         #endregion
 
-
-
+        #region Sign Out
         // Sign out
 
         public new async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction(nameof(Login));
-        }
+        } 
+        #endregion
 
         // Forget Password
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendEmail(ForgetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var User = await _userManager.FindByEmailAsync(model.Email);
+
+                if(User is not null)
+                {
+                    // Send Email
+                    var email = new Email()
+                    {
+                        Subject = "Reset Password",
+                        To = model.Email,
+                        Body = "ResetPasswordLink"
+                    };
+
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Email is not Exist");
+                }
+
+            }
+            else
+            {
+                return View("ForgetPassword",model);
+            }
+        }
+
         // Reset Password
     }
 }
