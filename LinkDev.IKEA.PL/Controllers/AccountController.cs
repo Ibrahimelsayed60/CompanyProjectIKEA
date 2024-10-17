@@ -55,9 +55,10 @@ namespace LinkDev.IKEA.PL.Controllers
             }
 
             return View(model);
-        } 
+        }
         #endregion
 
+        #region Login
         // Login
 
         public IActionResult Login()
@@ -68,15 +69,15 @@ namespace LinkDev.IKEA.PL.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var User = await _userManager.FindByEmailAsync(model.Email);
 
-                if(User is not null)
+                if (User is not null)
                 {
                     var Flag = await _userManager.CheckPasswordAsync(User, model.Password);
 
-                    if(Flag)
+                    if (Flag)
                     {
                         var Result = await _signInManager.PasswordSignInAsync(User, model.Password, model.RememberMe, false);
 
@@ -97,9 +98,19 @@ namespace LinkDev.IKEA.PL.Controllers
                 }
             }
             return View(model);
-        }
+        } 
+        #endregion
+
+
 
         // Sign out
+
+        public new async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(Login));
+        }
+
         // Forget Password
         // Reset Password
     }
