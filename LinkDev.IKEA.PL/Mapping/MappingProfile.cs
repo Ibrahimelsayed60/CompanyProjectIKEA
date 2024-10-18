@@ -46,7 +46,10 @@ namespace LinkDev.IKEA.PL.Mapping
             #endregion
 
             #region Role
-            CreateMap<IdentityRole, RoleViewModel>();
+            CreateMap<IdentityRole, RoleViewModel>()
+                .ForMember( vm => vm.RoleName, config => config.MapFrom(src => src.Name))
+                .ReverseMap()
+                .ForMember(dest => dest.Name, config => config.MapFrom(src => src.RoleName));
             #endregion
         }
 
