@@ -5,6 +5,8 @@ using LinkDev.IKEA.DAL.Entities;
 using LinkDev.IKEA.PL.ViewModels.Accounts;
 using LinkDev.IKEA.PL.ViewModels.Departments;
 using LinkDev.IKEA.PL.ViewModels.Employees;
+using LinkDev.IKEA.PL.ViewModels.Roles;
+using Microsoft.AspNetCore.Identity;
 
 namespace LinkDev.IKEA.PL.Mapping
 {
@@ -41,6 +43,10 @@ namespace LinkDev.IKEA.PL.Mapping
 
             CreateMap<ApplicationUser, UserViewModel>();
 
+            #endregion
+
+            #region Role
+            CreateMap<IdentityRole, RoleViewModel>();
             #endregion
         }
 
