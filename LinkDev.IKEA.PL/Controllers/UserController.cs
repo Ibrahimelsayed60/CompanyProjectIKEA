@@ -52,7 +52,7 @@ namespace LinkDev.IKEA.PL.Controllers
 		}
 
 
-		public async Task<IActionResult> Details (string? Id, string ViewName="Details")
+		public async Task<IActionResult> Details (string Id, string ViewName="Details")
 		{
             if (Id is null)
                 return BadRequest();
@@ -62,5 +62,44 @@ namespace LinkDev.IKEA.PL.Controllers
             var MappedUser = _mapper.Map<UserViewModel>(User);
             return View(ViewName, MappedUser);
         }
+
+
+        public async Task<IActionResult> Edit(string Id)
+        {
+            return await Details(Id, "Edit");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserViewModel model, [FromRoute] string? id)
+        {
+            if (id != model.Id)
+            {
+                return BadRequest();
+            }
+            if (model is null)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var User = await _userManager.FindByIdAsync(id);
+                    User.PhoneNumber = model.PhoneNumber;
+                    User.FName = model.FName;
+                    User.LName = model.LName;
+
+                    await _userManager.UpdateAsync(User);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+            }
+            return View(model);
+        }
+
 	}
 }
