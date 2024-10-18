@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using LinkDev.IKEA.BLL.Models.Departments;
 using LinkDev.IKEA.BLL.Models.Employees;
+using LinkDev.IKEA.DAL.Entities;
+using LinkDev.IKEA.PL.ViewModels.Accounts;
 using LinkDev.IKEA.PL.ViewModels.Departments;
 using LinkDev.IKEA.PL.ViewModels.Employees;
 
@@ -32,6 +34,12 @@ namespace LinkDev.IKEA.PL.Mapping
             CreateMap<DepartmentViewModel, UpdatedDepartmentDto>();
             CreateMap<DepartmentViewModel, CreatedDepartmentDto>();
 
+
+            #endregion
+
+            #region User
+
+            CreateMap<ApplicationUser, UserViewModel>();
 
             #endregion
         }
