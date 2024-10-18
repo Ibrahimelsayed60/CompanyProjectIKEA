@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using LinkDev.IKEA.DAL.Entities;
 using LinkDev.IKEA.PL.ViewModels.Accounts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkDev.IKEA.PL.Controllers
 {
+    [Authorize]
 	public class UserController : Controller
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
