@@ -1,0 +1,21 @@
+﻿@model EmployeeEditViewModel
+
+@{
+    ViewData["Title"] = "Create";
+
+}
+
+
+<div class=" row justify-content-center align-items-center">
+
+    <h1 class="col-8 my-4">Create Employee</h1>
+    <partial name="Partials/CreateEditEmployeePartial" />
+    
+</div>
+
+
+@section ValidationScripts
+{
+    <partial name="_ValidationScriptsPartial">
+
+}
