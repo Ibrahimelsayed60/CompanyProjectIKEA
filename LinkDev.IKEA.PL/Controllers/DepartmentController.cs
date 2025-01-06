@@ -8,8 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LinkDev.IKEA.PL.Controllers
 {
     [Authorize]
-    // Inheritance: DepartmentController is a controller
-    // Composition: DepartmentController has a IDepartmentService
+
     public class DepartmentController : Controller
     {
 
@@ -40,20 +39,9 @@ namespace LinkDev.IKEA.PL.Controllers
         public async Task<IActionResult> Index()
         {
 
-            #region ViewBag and ViewData testing
-            //ViewData["Message"] = "Hello ViewData";
-
-            //ViewBag.Message = "Hello ViewBag";
-
-            //ViewBag.Message = new { Id = 10, Name="Hassan" }; 
-            #endregion
-
             var departments = await _departmentService.GetAllDepartmentsAsync();
-
-            //return View();
+    
             return View(departments);
-            //return View("Index");
-            //return View("Index", departments);
 
         }
         #endregion
@@ -62,8 +50,6 @@ namespace LinkDev.IKEA.PL.Controllers
         [HttpGet] // Get: /Department/Create
         public IActionResult Create()
         {
-            
-
             return View();
         }
 
@@ -79,14 +65,6 @@ namespace LinkDev.IKEA.PL.Controllers
             try
             {
                 var departmentToCreate = _mapper.Map<DepartmentViewModel, CreatedDepartmentDto>(departmentVM);
-
-                //var departmentToCreate = new CreatedDepartmentDto()
-                //{
-                //    Code = departmentVM.Code,
-                //    Name = departmentVM.Name,
-                //    Description = departmentVM.Description,
-                //    CreationDate = departmentVM.CreationDate,
-                //};
 
                 var created = await _departmentService.CreateDepartmentAsync(departmentToCreate) > 0;
 
@@ -116,21 +94,8 @@ namespace LinkDev.IKEA.PL.Controllers
                 TempData["Message"] = message;
                 return RedirectToAction(nameof(Index));
 
-                //if (_environment.IsDevelopment())
-                //{
-                //    message = ex.Message;
-                //    return View(departmentDto);
-                //}
-                //else
-                //{
-                //    message = "Department is not created";
-                //    return View("Error", message);
-                //}
-
             }
-            //ModelState.AddModelError(string.Empty, message);
 
-            //return View(departmentVM);
         } 
         #endregion
 
@@ -166,24 +131,13 @@ namespace LinkDev.IKEA.PL.Controllers
 
             return View(departmentVM);
 
-            //return View(new DepartmentViewModel()
-            //{
-            //    //Id = id.Value,
-            //    Code = department.Code,
-            //    Name = department.Name,
-            //    Description = department.Description,
-            //    CreationDate = department.CreationDate,
-            //});
-
-
         }
 
         [HttpPost] // POST
         [ValidateAntiForgeryToken]
-        //public IActionResult Edit(DepartmentEditViewModel departmentVM)
         public async Task<IActionResult> Edit([FromRoute] int id, DepartmentViewModel departmentVM)
         {
-            if (!ModelState.IsValid) // Server-side Validation
+            if (!ModelState.IsValid) 
                 return View(departmentVM);
 
             var message = string.Empty;
@@ -193,21 +147,24 @@ namespace LinkDev.IKEA.PL.Controllers
 
                 var departmentToUpdate = _mapper.Map<DepartmentViewModel, UpdatedDepartmentDto>(departmentVM);
                 departmentToUpdate.Id = id;
-                //var departmentToUpdate = new UpdatedDepartmentDto()
-                //{
-                //    Id = id,
-                //    Code = departmentVM.Code,
-                //    Name = departmentVM.Name,
-                //    Description = departmentVM.Description,
-                //    CreationDate = departmentVM.CreationDate,
-                //};
 
                 var updated = await _departmentService.updateDepartmentAsync(departmentToUpdate) > 0;
 
                 if (updated)
-                    return RedirectToAction(nameof(Index));
+                {
+                    TempData["Message"] = "Department is updated";
 
-                message = "an error has occured during updating the department";
+                }
+                else
+                {
+                    TempData["Message"] = "Department is not updated";
+
+                    message = "an error has occured during updating the department";
+                    ModelState.AddModelError(string.Empty, message);
+                    return View(departmentVM);
+                }
+
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -217,11 +174,9 @@ namespace LinkDev.IKEA.PL.Controllers
                 // 2. Set Message
                 message = _environment.IsDevelopment() ? ex.Message : "an error has occured during updating the department";
 
-
+                TempData["Message"] = message;
+                return RedirectToAction(nameof(Index));
             }
-            ModelState.AddModelError(string.Empty, message);
-
-            return View(departmentVM);
         }
         #endregion
 
@@ -252,9 +207,16 @@ namespace LinkDev.IKEA.PL.Controllers
                 var deleted = await _departmentService.DeleteDepartmentAsync(id);
 
                 if (deleted)
-                    return RedirectToAction(nameof(Index));
+                {
+                    TempData["Message"] = "Department is Deleted";
+                }
+                else
+                {
+                    TempData["Message"] = "Department is not Deleted";
+                }
 
                 message = "an error has occured during deleting the department";
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -263,9 +225,8 @@ namespace LinkDev.IKEA.PL.Controllers
 
                 // 2. Set Message
                 message = _environment.IsDevelopment() ? ex.Message : "an error has occured during updating the department";
+                TempData["Message"] = message;
             }
-
-            //ModelState.AddModelError(string.Empty, message);
 
             return RedirectToAction(nameof(Index));
 

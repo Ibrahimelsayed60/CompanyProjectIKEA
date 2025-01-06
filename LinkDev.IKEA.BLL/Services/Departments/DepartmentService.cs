@@ -15,40 +15,28 @@ namespace LinkDev.IKEA.BLL.Services.Departments
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        //private readonly IDepartmentRepository _departmentRepository;
+        
 
-        public DepartmentService(/*IDepartmentRepository departmentRepository*/IUnitOfWork unitOfWork) // Ask CLR for creating object from class implementing the interface "IDepartmentRepository"
+        public DepartmentService(IUnitOfWork unitOfWork) // Ask CLR for creating object from class implementing the interface "IDepartmentRepository"
         {
             _unitOfWork = unitOfWork;
 
-            //_departmentRepository = departmentRepository;
+            
         }
 
         public async Task<IEnumerable<DepartmentDto>> GetAllDepartmentsAsync()
         {
-            //var departments = _departmentRepository.GetAll();
+            
 
             var departments = await _unitOfWork.DepartmentRepository.GetIQueryable().Where(D => !D.IsDeleted).Select(department => new DepartmentDto()
             {
                 Id = department.Id,
                 Name = department.Name,
                 Code = department.Code,
-                //Description = department.Description,
                 CreationDate = department.CreationDate,
             }).AsNoTracking().ToListAsync();
 
-            //foreach (var department in departments)
-            //{
-            //    //yield return (DepartmentToReturnDto)department;
-            //    yield return new DepartmentToReturnDto
-            //    {
-            //        Id = department.Id,
-            //        Name = department.Name,
-            //        Code = department.Code,
-            //        Description = department.Description,
-            //        CreationDate = department.CreationDate,
-            //    };
-            //}
+            
 
             return departments;
         }
@@ -83,7 +71,6 @@ namespace LinkDev.IKEA.BLL.Services.Departments
                 Description = departmentDto.Description,
                 CreationDate = departmentDto.CreationDate,
                 CreatedBy = 1,
-                //CreatedOn = DateTime.UtcNow,
                 LastModifiedBy = 1,
                 LastModifiedOn = DateTime.UtcNow,
             };

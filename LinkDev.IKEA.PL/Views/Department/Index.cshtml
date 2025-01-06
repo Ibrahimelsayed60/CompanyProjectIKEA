@@ -4,18 +4,10 @@
 @{
     ViewData["Title"] = "Departments";
 
-    // string? viewDataMessage = ViewData["Message"] as string;
 
-    // string? viewBagMessage = ViewBag.
 }
 
-@* <div class="alert alert-info">
-    @ViewData["Message"]
-</div>
 
-<div class="alert alert-info">
-    @ViewBag.Message
-</div> *@
 
 @if (!string.IsNullOrEmpty(TempData["Message"] as string))
 {
@@ -69,28 +61,7 @@
                     <td>@department.CreationDate</td>
 
                     <partial name="_ButtonsPartial" model="@department.Id.ToString()" />
-                    @* <td>
-                        <a asp-controller="Department" asp-action="Details" asp-route-id="@department.Id" class="btn btn-warning">
-                            <i class="fas fa-eye"></i>Details
-                        </a>
-                    </td>
-
-                    <td>
-                        <a asp-controller="Department" asp-action="Edit" asp-route-id="@department.Id" class="btn btn-success">
-                            <i class="fas fa-edit"></i>Update
-                        </a>
-                    </td>
-
-                    <td>
-                        /* <a asp-controller="Department" asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">
-                            <i class="fas fa-trash"></i>Delete
-                        </a> */
-
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="fas fa-trash"></i>Delete
-                        </button>
-
-                    </td> *@
+                    
                 </tr>
 
                 <!-- Modal -->

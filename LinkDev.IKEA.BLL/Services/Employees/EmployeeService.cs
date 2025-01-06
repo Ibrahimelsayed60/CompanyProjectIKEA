@@ -17,13 +17,13 @@ namespace LinkDev.IKEA.BLL.Services.Employees
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAttachmentService _attachmentService;
 
-        //private readonly IEmployeeRepository _employeeRepository;
+        /
 
-        public EmployeeService(/*IEmployeeRepository employeeRepository*/ IUnitOfWork unitOfWork, IAttachmentService attachmentService) // Ask CLR For Creating Object from class implementing "IUnitOfWork"
+        public EmployeeService( IUnitOfWork unitOfWork, IAttachmentService attachmentService) // Ask CLR For Creating Object from class implementing "IUnitOfWork"
         {
             _unitOfWork = unitOfWork;
             _attachmentService = attachmentService;
-            //_employeeRepository = employeeRepository;
+            
         }
 
         public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(string search)

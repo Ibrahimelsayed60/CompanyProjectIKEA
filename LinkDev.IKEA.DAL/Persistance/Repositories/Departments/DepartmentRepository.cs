@@ -18,7 +18,7 @@ namespace LinkDev.IKEA.DAL.Persistance.Repositories.Departments
         }
 
         public IEnumerable<Department> GetSpecificDepartments() {
-            //_dbContext
+
 
             throw new NotImplementedException();
         }

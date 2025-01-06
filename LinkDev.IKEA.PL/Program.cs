@@ -26,19 +26,16 @@ namespace LinkDev.IKEA.PL
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<ApplicationDbContext>(
-                //contextLifetime: ServiceLifetime.Scoped,
-                //optionsLifetime: ServiceLifetime.Scoped,
+
                 optionsAction: (optionsBuilder) => 
                 {
-                    //optionsBuilder.UseSqlServer("Server = .; Database = IKEA_G03; Trusted_Connection = True; TrustServerCertificate = True;");
+
                     optionsBuilder.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
-                    //optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 }
                 );
 
 
-            //builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -47,21 +44,15 @@ namespace LinkDev.IKEA.PL
 
             builder.Services.AddTransient<IAttachmentService, AttachmentService>();
 
-            //builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
-            //builder.Services.AddAutoMapper(typeof(MappingProfile));
+
             builder.Services.AddAutoMapper(M => M.AddProfile( new MappingProfile()));
 
-            //builder.Services.AddScoped<UserManager<ApplicationUser>>();
-            //builder.Services.AddScoped<SignInManager<ApplicationUser>>();
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
-
-                //Pa$$w0rd
-                //P@ssw0rd
 
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -74,24 +65,6 @@ namespace LinkDev.IKEA.PL
                     options.AccessDeniedPath = "Home/Error";
                 });
 
-            #region I replaced the following code by AddDbContext in the previous code
-            //builder.Services.AddScoped<ApplicationDbContext>();
-            //builder.Services.AddScoped<DbContextOptions<ApplicationDbContext>>((ServiceProvider) =>
-            //{
-            //    var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
-            //    optionsBuilder.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"]);
-
-            //    //using var scope = ServiceProvider.CreateScope();
-
-            //    //var departmentRepo = scope.ServiceProvider.GetService<IDepartmentRepository>();
-
-            //    var option = optionsBuilder.Options;
-
-            //    return option;
-            //});
-            #endregion
-
             #endregion
 
             var app = builder.Build();
@@ -101,7 +74,7 @@ namespace LinkDev.IKEA.PL
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                
                 app.UseHsts();
             }
 

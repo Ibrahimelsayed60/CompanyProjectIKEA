@@ -25,7 +25,6 @@ namespace LinkDev.IKEA.BLL.Models.Departments
 
         public string? Description { get; set; }
 
-        //[Display(Name="Creation Date")]
         public DateOnly CreationDate { get; set; }
     }
 }

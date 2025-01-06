@@ -50,11 +50,11 @@
 
     <div class="form-group col-6 my-3">
         <label class="control-label" asp-for="DepartmentId"></label>
-        @* <select asp-for="DepartmentId" asp-items="@ViewData["Depts"] as SelectList" class="form-control mb-3"> *@
+        
         <select asp-for="DepartmentId" asp-items="@departments" class="form-control mb-3">
             <option value="@null">Choose ... </option>
         </select>
-        @* <span asp-validation-for="EmployeeType" class="text-danger"></span> *@
+        
     </div>
 
     <div class="form-group col-6 my-3">
@@ -62,7 +62,7 @@
         <select asp-for="EmployeeType" asp-items="Html.GetEnumSelectList<EmployeeType>()" class="form-control mb-3">
             <option value="">Select Employee Type</option>
         </select>
-        @* <span asp-validation-for="EmployeeType" class="text-danger"></span> *@
+        
     </div>
 
     <div class="form-group col-6">
@@ -87,13 +87,13 @@
     <div class="form-check col-12 mb-3">
         <label class="form-check-label" asp-for="IsActive"></label>
         <input asp-for="IsActive" class="form-check-input mb-3" />
-        @* <span asp-validation-for="IsActive" class="text-danger"></span> *@
+        
     </div>
 
     <div class="form-group col-6 mb-3">
         <label class="form-label" asp-for="Image"></label>
         <input asp-for="Image" class="form-control mb-3" />
-        @* <span asp-validation-for="Image" class="text-danger"></span> *@
+        
     </div>
 
     @if ((ViewData["Title"] as string) == "Create")

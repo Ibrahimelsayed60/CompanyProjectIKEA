@@ -23,7 +23,7 @@ namespace LinkDev.IKEA.BLL.Common.Services.Attachments
             if(file.Length > _allowedMaxSize)
                 return null;
 
-            //var folderPath = $"{Directory.GetCurrentDirectory}\\wwwroot\\files\\{folderName}";
+            
             var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\files", folderName);
 
             if(! Directory.Exists(folderPath))
@@ -35,7 +35,6 @@ namespace LinkDev.IKEA.BLL.Common.Services.Attachments
 
             using var fileStream = new FileStream(filePath, FileMode.Create);
 
-            //fileStream = File.Create(filePath);
             
             await file.CopyToAsync(fileStream);
 

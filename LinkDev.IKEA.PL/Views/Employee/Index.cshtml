@@ -104,26 +104,5 @@ else
 }
 
 
-@* <script>
 
-    const SearchBar = $('#searchInp');
-    const table = $('table');
-
-    SearchBar.on('keyup', function (event) {
-        var searchval = SearchBar.val();
-
-        $.ajax({
-            url: '/Employee/Search',
-            type: 'Get',
-            data: { searchInput: searchval },
-            success:function(result){
-                table.html(result)
-            },
-            error:function(xhr,status,error){
-                console.log(error)
-            }
-        })
-    })
-
-</script> *@
 

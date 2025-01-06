@@ -130,7 +130,7 @@ namespace LinkDev.IKEA.PL.Controllers
                 {
                     // Send Email
                     var token = await _userManager.GeneratePasswordResetTokenAsync(User);
-                    // Account/ResetPassword?email=hemasayed600@gmail.com
+                    
                     var ResetPasswordLink = Url.Action("ResetPassword", "Account", new { email = User.Email, Token = token }, Request.Scheme);
 
                     var email = new Email()

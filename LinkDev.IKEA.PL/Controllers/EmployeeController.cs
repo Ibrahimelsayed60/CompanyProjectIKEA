@@ -23,7 +23,6 @@ namespace LinkDev.IKEA.PL.Controllers
 
         public EmployeeController(
             IEmployeeService employeeService,
-            //IDepartmentService departmentService,
             IMapper mapper,
             IWebHostEnvironment webHostEnvironment, 
             ILogger<EmployeeController> logger)
@@ -41,8 +40,6 @@ namespace LinkDev.IKEA.PL.Controllers
         public async Task<IActionResult> Index(string search)
         {
             var employees = await _employeeService.GetEmployeesAsync(search);
-            //if (!string.IsNullOrEmpty(search))
-            //    return PartialView("Partials/_EmployeeListPartial", employees);
 
             return View(employees);
         }
@@ -62,10 +59,8 @@ namespace LinkDev.IKEA.PL.Controllers
 
         #region Create
         [HttpGet] // Get: /Employee/Get
-        public IActionResult Create(/*[FromServices] IDepartmentService departmentService*/)
+        public IActionResult Create()
         {
-
-            //ViewData["Departments"] = departmentService.GetAllDepartments();
 
             return View();
         }
@@ -83,22 +78,6 @@ namespace LinkDev.IKEA.PL.Controllers
             try
             {
                 var employeeDto = _mapper.Map<EmployeeEditViewModel, CreatedEmployeeDto>(employeeVM);
-
-                //var employeeDto = new CreatedEmployeeDto()
-                //{
-                //    Name = employeeVM.Name,
-                //    Email = employeeVM.Email,
-                //    Address = employeeVM.Address,
-                //    PhoneNumber = employeeVM.PhoneNumber,
-                //    IsActive = employeeVM.IsActive,
-                //    Age = employeeVM.Age,
-                //    EmployeeType = employeeVM.EmployeeType,
-                //    Gender = employeeVM.Gender,
-                //    HiringDate = employeeVM.HiringDate,
-                //    Salary = employeeVM.Salary,
-                //    DepartmentId = employeeVM.DepartmentId,
-                    
-                //};
 
                 var result = await _employeeService.CreateEmployeeAsync(employeeDto);
 
@@ -143,7 +122,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
         #region Update
         [HttpGet] // Get: /Employee/Edit/id?
-        public async Task<IActionResult> Edit(int? id/*, [FromServices] IDepartmentService departmentService*/)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
                 return BadRequest();
@@ -153,26 +132,11 @@ namespace LinkDev.IKEA.PL.Controllers
             if (employee is null)
                 return NotFound();
 
-            //ViewData["Departments"] = departmentService.GetAllDepartments();
 
             var employeeVM = _mapper.Map<EmployeeDetailsDto, EmployeeEditViewModel>(employee);
 
             return View(employeeVM);
-            //return View(new EmployeeEditViewModel()
-            //{
-            //    Name = employee.Name,
-            //    Address = employee.Address,
-            //    Email = employee.Email,
-            //    Age = employee.Age,
-            //    Salary = employee.Salary,
-            //    HiringDate = employee.HiringDate,
-            //    IsActive = employee.IsActive,
-            //    PhoneNumber = employee.PhoneNumber,
-            //    EmployeeType = employee.EmployeeType,
-            //    Gender = employee.Gender,
-            //    //DepartmentId = employee.DepartmentId,
-            //    DepartmentName = employee.Department
-            //});
+
         }
 
         [HttpPost] // Post: /Employee/Edit/id?
@@ -189,21 +153,6 @@ namespace LinkDev.IKEA.PL.Controllers
                 var employeeDto = _mapper.Map<EmployeeEditViewModel, UpdatedEmployeeDto>(updatedEmployee);
                 employeeDto.Id = id;
 
-                //var employeeDto = new UpdatedEmployeeDto()
-                //{
-                //    Id = id,
-                //    Name = updatedEmployee.Name,
-                //    Email = updatedEmployee.Email,
-                //    Address = updatedEmployee.Address,
-                //    PhoneNumber = updatedEmployee.PhoneNumber,
-                //    IsActive = updatedEmployee.IsActive,
-                //    Age = updatedEmployee.Age,
-                //    EmployeeType = updatedEmployee.EmployeeType,
-                //    Gender = updatedEmployee.Gender,
-                //    HiringDate = updatedEmployee.HiringDate,
-                //    Salary = updatedEmployee.Salary,
-                //    DepartmentId = updatedEmployee.DepartmentId,
-                //};
                 var result = await _employeeService.UpdateEmployeeAsync(employeeDto);
 
                 if (result > 0)
@@ -227,19 +176,6 @@ namespace LinkDev.IKEA.PL.Controllers
 
 
         #region Delete
-        //[HttpGet] // Get: /Employee/Delete/id?
-        //public IActionResult Delete(int? id)
-        //{
-        //    if (id is null)
-        //        return BadRequest();
-
-        //    var employee = _employeeService.GetEmployeeById(id.Value);
-
-        //    if (employee is null)
-        //        return NotFound();
-
-        //    return View(employee);
-        //}
 
         [HttpPost] // Post: /Employee/Delete
         [ValidateAntiForgeryToken]

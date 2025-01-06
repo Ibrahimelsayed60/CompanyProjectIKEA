@@ -10,7 +10,7 @@ namespace LinkDev.IKEA.DAL.Entities.Departments
 {
     public class Department : ModelBase
     {
-        //[Required(ErrorMessage ="Name is required")]
+        
         public string Name { get; set; } = null!;
 
         public string Code { get; set; } = null!;
@@ -19,7 +19,7 @@ namespace LinkDev.IKEA.DAL.Entities.Departments
 
         public DateOnly CreationDate { get; set; }
 
-        // Navigational Property [Many]
+        
         public virtual ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
     }
 }

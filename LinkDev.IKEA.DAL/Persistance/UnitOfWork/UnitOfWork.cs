@@ -17,10 +17,9 @@ namespace LinkDev.IKEA.DAL.Persistance.UnitOfWork
             
         public IDepartmentRepository DepartmentRepository => new DepartmentRepository(_dbContext);
 
-        public UnitOfWork(ApplicationDbContext dbContext) // Ask CLR fpr creationg object from class "ApplicationDbContext" Implicitly
+        public UnitOfWork(ApplicationDbContext dbContext) 
         {
-            //EmployeeRepository = new EmployeeRepository(dbContext);
-            //DepartmentRepository = new DepartmentRepository(dbContext);
+
             _dbContext = dbContext;
         }
 
